@@ -6,10 +6,10 @@ node {
 
         stage('Pull') {
             try {
-                git branch: 'main', url: 'https://github.com/YeonjiKim0316/fisa04-jenkins-text.git'
-                echo "Stage Pull success!"
+                git branch: 'main', url: 'https://github.com/sssyyysss109/fisa04-jenkins-text.git'
+                echo "Stage Pull success"
             } catch (Exception e) {
-                echo "Stage Pull failed!"
+                echo "Stage Pull failed"
                 throw e
             }
         }
@@ -33,16 +33,16 @@ node {
 
         stage('Deploy') {
             sshagent(credentials: ['ec2-flask-server']) {
-                sh(script: 'ssh -o StrictHostKeyChecking=no ubuntu@43.203.237.34 "sudo docker rm -f docker-flask"')
-                sh(script: 'ssh -o StrictHostKeyChecking=no ubuntu@43.203.237.34 "pwd"')
-                sh(script: 'ssh -o StrictHostKeyChecking=no ubuntu@43.203.237.34 "sudo docker run --name docker-flask --env-file .env -e TZ=Asia/Seoul -p 80:80 -d -t ${DOCKER_USER_ID}/fisa-app:${BUILD_NUMBER}"')
+                sh(script: 'ssh -o StrictHostKeyChecking=no ubuntu@52.78.201.205 "sudo docker rm -f docker-flask"')
+                sh(script: 'ssh -o StrictHostKeyChecking=no ubuntu@52.78.201.205 "pwd"')
+                sh(script: 'ssh -o StrictHostKeyChecking=no ubuntu@52.78.201.205 "sudo docker run --name docker-flask --env-file .env -e TZ=Asia/Seoul -p 80:80 -d -t ${DOCKER_USER_ID}/fisa-app:${BUILD_NUMBER}"')
             }
             echo "Stage Deploy success"
         }
 
         stage('Cleaning up') {
             sh "sudo docker rmi ${DOCKER_USER_ID}/fisa-app:${BUILD_NUMBER}"
-            echo "Stage Cleaning up success"
+            echo "Stage Cleaning up success!!!"
         }
     }
 }
